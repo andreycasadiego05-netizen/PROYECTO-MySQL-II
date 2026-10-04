@@ -198,7 +198,6 @@ La base de datos `coworking` está compuesta por **14 tablas principales** (las 
 
 El modelo lógico diseñado por el equipo está en [`docs/diagrama_proyecto.jpg`](docs/diagrama_proyecto.jpg):
 
-![Diagrama lógico del proyecto](docs/diagrama_proyecto.jpg)
 
 En el diagrama, `empresa` y el tipo de membresía aparecen como atributos de `usuario` y `membresia`. En la implementación final se separaron en dos tablas de catálogo para no repetir datos: `usuario.empresaID` apunta a `empresa` y `membresia.tipoID` apunta a `tipo_membresia` (que además guarda el precio y la duración de cada tipo). El resto de entidades, atributos y relaciones se mantienen tal como están en el diagrama.
 
