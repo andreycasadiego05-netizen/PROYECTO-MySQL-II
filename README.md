@@ -79,6 +79,9 @@ Los scripts están divididos en carpetas según su propósito. El número de cad
 ```text
 PROYECTO-MySQL-II/
 ├── README.md
+├── docs/
+│   ├── diagrama_proyecto.jpg    → diagrama lógico del modelo
+│   └── roles_permisos.md        → roles, permisos y matriz de accesos en detalle
 └── sql/
     ├── 01_modelado/            # DDL y DML
     │   ├── 01_estructura.sql        → crea la base de datos y las 14 tablas
@@ -189,9 +192,17 @@ SELECT * FROM notificacion ORDER BY fecha_creacion DESC;
 
 ## 🧱 Estructura de la base de datos
 
-La base de datos `coworking` está compuesta por **14 tablas principales** y 3 tablas de apoyo.
+La base de datos `coworking` está compuesta por **14 tablas principales** (las 12 entidades del diagrama lógico más los catálogos `empresa` y `tipo_membresia`) y 3 tablas de apoyo.
 
-### Diagrama entidad-relación
+### Diagrama lógico
+
+El modelo lógico diseñado por el equipo está en [`docs/diagrama_proyecto.jpg`](docs/diagrama_proyecto.jpg):
+
+![Diagrama lógico del proyecto](docs/diagrama_proyecto.jpg)
+
+En el diagrama, `empresa` y el tipo de membresía aparecen como atributos de `usuario` y `membresia`. En la implementación final se separaron en dos tablas de catálogo para no repetir datos: `usuario.empresaID` apunta a `empresa` y `membresia.tipoID` apunta a `tipo_membresia` (que además guarda el precio y la duración de cada tipo). El resto de entidades, atributos y relaciones se mantienen tal como están en el diagrama.
+
+### Diagrama entidad-relación (modelo implementado)
 
 ```mermaid
 erDiagram
@@ -446,6 +457,8 @@ Tareas automáticas que se ejecutan solas mientras el programador de eventos est
 ## 🛡️ Roles de usuario y permisos
 
 El acceso se controla con **5 roles de MySQL** (scripts en `sql/07_seguridad/`). Los permisos se asignan a los roles y las cuentas heredan lo que su rol permite, con el principio de **mínimo privilegio**.
+
+> 📘 La matriz completa de permisos por tabla, vista y procedimiento está en [`docs/roles_permisos.md`](docs/roles_permisos.md).
 
 | Rol | Descripción | Permisos principales |
 |---|---|---|
